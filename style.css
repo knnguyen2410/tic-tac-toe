@@ -1,3 +1,102 @@
-p {
-    color: red;
+.container {
+    display: grid;
+    width: auto;
+    height: 100vh;
+    grid-template-areas:
+      "head"
+      "main"
+      "foot";
+    grid-template-rows: 1fr 10fr 1fr;
+    grid-template-columns: 1fr;
+  }
+  
+header {
+    grid-area: head;
+    background-color: yellow;
+}
+  
+main {
+    grid-area: main;
+    background-color: gray;
+}
+
+footer {
+    grid-area: foot;
+    background-color: yellow;
+    text-align: right;
+}
+
+.main {
+    display: grid;
+    width: auto;
+    height: auto;
+    grid-template-areas:
+      "title title title"
+      "button button button"
+      "game game game"
+      "player1 tie player2";
+    grid-template-rows: 2fr 1fr 10fr 3fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;    
+    text-align: center;
+}
+
+#title {
+    grid-area: title;
+    background-color: paleturquoise;
+    font-size: 200%;
+}
+  
+.button {
+    grid-area: button;
+    background-color: lightpink;
+}
+
+#button-new {
+    margin-right: 50px;
+}
+
+#button-reset {
+    margin-left: 50px;
+}
+
+.game {
+    grid-area: game;
+    background-color: paleturquoise;
+}
+
+.player-one {
+    grid-area: player1;
+    background-color: lightblue;
+}
+
+.tie {
+    grid-area: tie;
+    background-color: pink;
+}
+
+.player-two {
+    grid-area: player2;
+    background-color: palegreen;
+}
+
+.game-board {
+    display: grid;
+    width: auto%;
+    height: auto;
+    grid-template-areas:
+      "1 2 3"
+      "4 5 6"
+      "7 8 9";
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;    
+    text-align: center;
+}
+
+.tile {
+    border-style: solid;
+    padding: 50px;
+    width: 50px;
+    height: 50px;
 }
