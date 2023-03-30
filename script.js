@@ -7,8 +7,6 @@ const gameElement = document.querySelector(".game")
 const gameBoard = document.querySelector(".game-board")
 const allTiles = document.querySelectorAll(".tile")
 
-const scoreboardElement = document.querySelectorAll(".scoreboard")
-
 const playerOneElement = document.querySelector(".player-one")
 const playerOneStatus = document.querySelector(".player-one .status")
 const playerOneName = document.querySelector(".player-one .name")
@@ -42,6 +40,7 @@ buttonNewGame.addEventListener("click", function() {
     playerOneTurn = true // starts new game with player one
     playerOneStatus.innerText = "Your Turn" 
     playerTwoStatus.innerText = ""
+    tieStatus.innerText = ""
 })
 
 gameOn()
@@ -56,19 +55,18 @@ function gameOn() {
             if (winYet === false && tile.innerText === "") { // if no winner yet and the tile isn't blank 
                 if (playerOneTurn) {
                     tile.innerText = playerOneSymbol // player one symbol for tile's innerText
-                    playerOneStatus.innerText = "Your Turn" // indicates player one's turn
-                    playerTwoStatus.innerText = ""
+                    playerOneStatus.innerText = "" // indicates player one's turn
+                    playerTwoStatus.innerText = "Your Turn"
                 } else {
                     tile.innerText = playerTwoSymbol // player two symbole for tile's innerText
-                    playerOneStatus.innerText = ""
-                    playerTwoStatus.innerText = "Your Turn" // indicates player two's turn
+                    playerOneStatus.innerText = "Your Turn"
+                    playerTwoStatus.innerText = "" // indicates player two's turn
                 }
                 checkWin() // check for winner after each click
-                console.log(winYet)
+                checkTie() // check for tie after each click
                 playerOneTurn = !playerOneTurn // switches between player one's and player two's turns
             }
         })
-        
     })
 }
 
@@ -92,67 +90,43 @@ function checkWin() {
             allTiles[b].innerText === allTiles[c].innerText
         ) {
             winYet = true // declares winner
-            console.log(winYet)
-        }
+
+            if (playerOneStatus.innerText === "") { // updates winner status
+                playerOneStatus.innerText = "Winner!"
+                playerTwoStatus.innerText = "Loser"
+            } else {
+                playerOneStatus.innerText = "Loser"
+                playerTwoStatus.innerText = "Winner!"
+            }
+        } 
     }
 }
 
-// winning player status != ""
+function checkTie() {
+    if (winYet === false) {
+        let moveTracker = []
+        for (let i = 0; i < allTiles.length; i++) {
+            moveTracker.push(allTiles[i].innerText)
+        }
+        if (moveTracker.includes("")) {
+            console.log("No Tie")
+        } else {
+            tieStatus.innerText = "It's a Tie"
+            playerOneStatus.innerText = ""
+            playerTwoStatus.innerText = ""
+        }
+        console.log(moveTracker)
+    }
+}
 
-
-
-console.log(scoreboardElement)
 
 /*
-add 1 to score for winning player
-"player 1/2 wins"
-
 when all 9 tiles filled:
 it's a tie message
+
+add 1 to score for winning player
 add 1 to score for tie
 
 when reset scores button clicked
 all 3 scores = 0
-*/
-
-/*
-winning combos
-
-rows
-012
-345
-678
-
-allTiles[0].innerText === allTiles[1].innerText === allTiles[2].innerText
-allTiles[3].innerText === allTiles[4].innerText === allTiles[5].innerText
-allTiles[6].innerText === allTiles[7].innerText === allTiles[8].innerText
-
-columns
-036
-147
-258
-
-allTiles[0].innerText === allTiles[3].innerText === allTiles[6].innerText
-allTiles[1].innerText === allTiles[4].innerText === allTiles[7].innerText
-allTiles[2].innerText === allTiles[5].innerText === allTiles[8].innerText
-
-diagonals
-048
-246
-
-allTiles[0].innerText === allTiles[4].innerText === allTiles[8].innerText
-allTiles[2].innerText === allTiles[4].innerText === allTiles[6].innerText
-*/
-
-/*
-winning combos but remove blank
-
-(allTiles[0].innerText !== "") && (allTiles[0].innerText === allTiles[1].innerText) && (allTiles[1].innerText === allTiles[2].innerText) ||
-(allTiles[3].innerText !== "") && (allTiles[3].innerText === allTiles[4].innerText) && (allTiles[4].innerText === allTiles[5].innerText) ||
-(allTiles[6].innerText !== "") && (allTiles[6].innerText === allTiles[7].innerText) && (allTiles[7].innerText === allTiles[8].innerText) ||
-(allTiles[0].innerText !== "") && (allTiles[0].innerText === allTiles[3].innerText) && (allTiles[3].innerText === allTiles[6].innerText) ||
-(allTiles[1].innerText !== "") && (allTiles[1].innerText === allTiles[4].innerText) && (allTiles[4].innerText === allTiles[7].innerText) || 
-(allTiles[2].innerText !== "") && (allTiles[2].innerText === allTiles[5].innerText) && (allTiles[5].innerText === allTiles[8].innerText) ||
-(allTiles[0].innerText !== "") && (allTiles[0].innerText === allTiles[4].innerText) && (allTiles[4].innerText === allTiles[8].innerText) ||
-(allTiles[2].innerText !== "") && (allTiles[2].innerText === allTiles[4].innerText) && (allTiles[4].innerText === allTiles[6].innerText)
 */
