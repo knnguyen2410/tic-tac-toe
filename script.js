@@ -6,6 +6,7 @@ const buttonResetScores = document.querySelector("#button-reset")
 const gameElement = document.querySelector(".game")
 const gameBoard = document.querySelector(".game-board")
 const allTiles = document.querySelectorAll(".tile")
+const allScores = document.querySelectorAll(".score")
 
 const playerOneElement = document.querySelector(".player-one")
 const playerOneStatus = document.querySelector(".player-one .status")
@@ -30,6 +31,9 @@ let playerOneTurn = true // starts off with player one
 playerOneStatus.innerText = "Your Turn" // starts with player one's turn
 
 let winYet = false // no winner at start of the game
+playerOneScore.innerText = 0 // start scores at zero
+playerTwoScore.innerText = 0
+tieScore.innerText = 0
 
 // when New Game button clicked, clear the board's contents
 buttonNewGame.addEventListener("click", function() {
@@ -41,6 +45,13 @@ buttonNewGame.addEventListener("click", function() {
     playerOneStatus.innerText = "Your Turn" 
     playerTwoStatus.innerText = ""
     tieStatus.innerText = ""
+})
+
+// when Reset Scores button clicked, resets all scores to 0
+buttonResetScores.addEventListener("click", function() {
+    allScores.forEach(function(score) {
+        score.innerText = 0
+    })
 })
 
 gameOn()
@@ -94,39 +105,30 @@ function checkWin() {
             if (playerOneStatus.innerText === "") { // updates winner status
                 playerOneStatus.innerText = "Winner!"
                 playerTwoStatus.innerText = "Loser"
+                playerOneScore.innerText = Number(playerOneScore.innerText) + 1 // increase score by 1
             } else {
                 playerOneStatus.innerText = "Loser"
                 playerTwoStatus.innerText = "Winner!"
+                playerTwoScore.innerText = Number(playerTwoScore.innerText) + 1 // increase score by 1
             }
         } 
     }
 }
 
 function checkTie() {
-    if (winYet === false) {
+    if (winYet === false) { // if no winner yet (this covers the situation if there is a winning move in the 9th move of the game)
         let moveTracker = []
         for (let i = 0; i < allTiles.length; i++) {
-            moveTracker.push(allTiles[i].innerText)
+            moveTracker.push(allTiles[i].innerText) // tracks player symbols at each index
         }
-        if (moveTracker.includes("")) {
-            console.log("No Tie")
+        if (moveTracker.includes("")) { // all 9 tiles not filled yet
+            console.log("No Tie") 
         } else {
-            tieStatus.innerText = "It's a Tie"
+            tieStatus.innerText = "It's a Tie" // no winner and all 9 tiles are filled
+            tieScore.innerText = Number(tieScore.innerText) + 1 // increase score by 1
             playerOneStatus.innerText = ""
             playerTwoStatus.innerText = ""
         }
         console.log(moveTracker)
     }
 }
-
-
-/*
-when all 9 tiles filled:
-it's a tie message
-
-add 1 to score for winning player
-add 1 to score for tie
-
-when reset scores button clicked
-all 3 scores = 0
-*/
