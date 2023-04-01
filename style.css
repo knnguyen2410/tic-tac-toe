@@ -1,12 +1,15 @@
+body {
+    margin: 0
+}
+
 .container {
     display: grid;
-    width: auto;
+    width: 100vw;
     height: 100vh;
     grid-template-areas:
       "head"
       "main"
       "foot";
-    grid-template-rows: 1fr 10fr 1fr;
     grid-template-columns: 1fr;
   }
   
@@ -26,38 +29,9 @@ footer {
     text-align: right;
 }
 
-.main {
-    display: grid;
-    width: auto;
-    height: auto;
-    grid-template-areas:
-      "title title title"
-      "button button button"
-      "game game game"
-      "player1 tie player2";
-    grid-template-rows: 2fr 1fr 10fr 3fr;
-    grid-template-columns: 1fr 1fr 1fr;
-    place-items: center;    
-    text-align: center;
-}
-
 #title {
     grid-area: title;
-    background-color: paleturquoise;
-    font-size: 200%;
-}
-  
-.button {
-    grid-area: button;
-    background-color: lightpink;
-}
-
-#button-new {
-    margin-right: 50px;
-}
-
-#button-reset {
-    margin-left: 50px;
+    background-color: paleturquoise;    
 }
 
 .game {
@@ -80,23 +54,110 @@ footer {
     background-color: palegreen;
 }
 
+.status, .name, .score {
+    margin: 10px;
+}
+
 .game-board {
     display: grid;
-    width: auto%;
+    width: auto;
     height: auto;
     grid-template-areas:
       "1 2 3"
       "4 5 6"
       "7 8 9";
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     place-items: center;    
     text-align: center;
 }
 
 .tile {
     border-style: solid;
-    padding: 50px;
-    width: 50px;
-    height: 50px;
+    padding: 2em;
+    width: 2em;
+    height: 2em;
+}
+
+@media screen and (min-width: 20em) {
+    main {
+        background-color: lavender;
+        height: 100vh;
+    }
+
+    .main {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        grid-template-areas:
+          "title"
+          "buttonNew"
+          "buttonReset"
+          "game"
+          "player1"
+          "tie" 
+          "player2";
+        grid-template-rows: 2fr 2fr 2fr 10fr 5fr 5fr 5fr;
+        grid-template-columns: 1fr;
+        place-items: center;    
+        text-align: center;
+    }
+    
+    #button-new {
+        grid-area: buttonNew;
+        display: block;
+        margin: auto;
+    }
+    
+    #button-reset {
+        grid-area: buttonReset;
+        display: block;
+        margin: auto;
+    }
+
+    .player-one, .tie, .player-two {
+        display: inline-flex;
+    }
+}
+
+@media screen and (min-width: 48em) {
+    main {
+        background-color: blue;
+    }
+
+    .main {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        grid-template-areas:
+          "title title title"
+          "button button button"
+          "game game game"
+          "player1 tie player2";
+        grid-template-rows: 2fr 1fr 10fr 5fr;
+        grid-template-columns: repeat(3, 1fr);
+        place-items: center;    
+        text-align: center;
+    }
+
+    .button {
+        grid-area: button;
+        background-color: lightpink;
+    }
+
+    #button-new {
+        display: inline;
+        max-width: 100%;
+        margin-right: 2em;
+    }
+    
+    #button-reset {
+        display: inline;
+        max-width: 100%;
+        margin-left: 2em;
+    }
+
+    .player-one, .player-two, .tie {
+        display: block;
+    }
 }

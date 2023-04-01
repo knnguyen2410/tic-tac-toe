@@ -81,6 +81,8 @@ function gameOn() {
     })
 }
 
+gameOn()
+
 function checkWin() {
     const winningDivs = [ // these will become the index values of each winning combination in the allTiles array
         [0, 1, 2], // row top
