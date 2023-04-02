@@ -23,10 +23,7 @@ const tieStatus = document.querySelector(".tie .status")
 const tieName = document.querySelector(".tie .name")
 const tieScore = document.querySelector(".tie .score")
 
-// can use these variables to change symbols later, update the player names
-let playerOneSymbol = "X"
-let playerTwoSymbol = "O"
-
+// brand new game starting conditions
 let playerOneTurn = true // starts off with player one 
 playerOneStatus.innerText = "Your Turn" // starts with player one's turn
 
@@ -34,6 +31,10 @@ let winYet = false // no winner at start of the game
 playerOneScore.innerText = 0 // start scores at zero
 playerTwoScore.innerText = 0
 tieScore.innerText = 0
+
+//let players choose their symbols
+let playerOneSymbol = "" 
+let playerTwoSymbol = ""
 
 // when New Game button clicked, clear the board's contents
 buttonNewGame.addEventListener("click", function() {
@@ -54,7 +55,44 @@ buttonResetScores.addEventListener("click", function() {
     })
 })
 
-gameOn()
+alert("Welcome to Tic-Tac-Toe")
+chooseSymbol()
+
+// allows player to customize their symbol (defaults to X & O)
+function chooseSymbol() {
+    playerOneSymbol = prompt("Player 1: Enter Your Symbol or Image URL")
+    if (playerOneSymbol === "") { // doesn't allow blank entries
+        playerOneSymbol = "X"
+    }
+    if (!playerOneSymbol.trim()) { // doesn't allow string of whitespace
+        while (!playerOneSymbol.trim()) {
+            playerOneSymbol = prompt("Player 1: Choose Something Else")
+        }
+    }
+    if (/\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(playerOneSymbol)) {  // checks to see if URL string ends in image extension. source https://bobbyhadz.com/blog/javascript-check-if-url-is-image
+        playerOneSymbol = `<img src="${playerOneSymbol}" width="50px" height="50px">`
+    }
+
+    playerTwoSymbol = prompt("Player 2: Enter Your Symbol or Image URL")
+    if (playerTwoSymbol === "") {
+        playerTwoSymbol = "O"
+    }
+    if (!playerTwoSymbol.trim()) {
+        while (!playerTwoSymbol.trim()) {
+            playerTwoSymbol = prompt("Player 2: Choose Something Else")
+        }
+    }
+    if (/\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(playerTwoSymbol)) {  
+        playerTwoSymbol = `<img src="${playerTwoSymbol}" width="50px" height="50px">`
+    }
+    while (playerTwoSymbol === playerOneSymbol) { // doesn't let player1 and player2 symbols be the same
+        playerTwoSymbol = prompt("Player 2: Choose Something Else")
+        if (/\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(playerTwoSymbol)) { 
+            playerTwoSymbol = `<img src="${playerTwoSymbol}" width="50px" height="50px">`
+        }
+    }
+    gameOn()
+}
 
 // when an empty tile is clicked, switch between the following:
 // 1. turning innerText to X and O
@@ -65,11 +103,11 @@ function gameOn() {
         tile.addEventListener("click", function(){ // makes tiles clickable
             if (winYet === false && tile.innerText === "") { // if no winner yet and the tile isn't blank 
                 if (playerOneTurn) {
-                    tile.innerText = playerOneSymbol // player one symbol for tile's innerText
+                    tile.innerHTML = playerOneSymbol // player one symbol for tile's innerText
                     playerOneStatus.innerText = "" // indicates player one's turn
                     playerTwoStatus.innerText = "Your Turn"
                 } else {
-                    tile.innerText = playerTwoSymbol // player two symbole for tile's innerText
+                    tile.innerHTML = playerTwoSymbol // player two symbole for tile's innerText
                     playerOneStatus.innerText = "Your Turn"
                     playerTwoStatus.innerText = "" // indicates player two's turn
                 }
@@ -80,8 +118,6 @@ function gameOn() {
         })
     })
 }
-
-gameOn()
 
 function checkWin() {
     const winningDivs = [ // these will become the index values of each winning combination in the allTiles array
@@ -100,7 +136,10 @@ function checkWin() {
         if ( // and use those numbers as the index values for the allTiles array
             allTiles[a].innerText !== "" && // excludes blank tiles
             allTiles[a].innerText === allTiles[b].innerText && // if the values in 3 spots are the same
-            allTiles[b].innerText === allTiles[c].innerText
+            allTiles[b].innerText === allTiles[c].innerText ||
+            allTiles[a].innerHTML !== "" && // excludes blank tiles
+            allTiles[a].innerHTML === allTiles[b].innerHTML && // if the values in 3 spots are the same
+            allTiles[b].innerHTML === allTiles[c].innerHTML
         ) {
             winYet = true // declares winner
 
@@ -121,7 +160,7 @@ function checkTie() {
     if (winYet === false) { // if no winner yet (this covers the situation if there is a winning move in the 9th move of the game)
         let moveTracker = []
         for (let i = 0; i < allTiles.length; i++) {
-            moveTracker.push(allTiles[i].innerText) // tracks player symbols at each index
+            moveTracker.push(allTiles[i].innerHTML) // tracks player symbols at each index
         }
         if (moveTracker.includes("")) { // all 9 tiles not filled yet
             console.log("No Tie") 
