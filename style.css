@@ -1,5 +1,17 @@
+header {
+    text-align: center;
+    margin-top: 10px;
+}
+
 body {
-    margin: 0
+    margin: 0;
+    color: black;
+    background-color: white;
+}
+
+.dark-mode {
+    color: white;
+    background-color: black;
 }
 
 .container {
@@ -15,43 +27,35 @@ body {
   
 header {
     grid-area: head;
-    background-color: yellow;
 }
   
 main {
     grid-area: main;
-    background-color: gray;
 }
 
 footer {
     grid-area: foot;
-    background-color: yellow;
-    text-align: right;
+    text-align: center;
 }
 
 #title {
     grid-area: title;
-    background-color: paleturquoise;    
 }
 
 .game {
     grid-area: game;
-    background-color: paleturquoise;
 }
 
 .player-one {
     grid-area: player1;
-    background-color: lightblue;
 }
 
 .tie {
     grid-area: tie;
-    background-color: pink;
 }
 
 .player-two {
     grid-area: player2;
-    background-color: palegreen;
 }
 
 .status, .name, .score {
@@ -79,9 +83,15 @@ footer {
     height: 2em;
 }
 
+.token {
+    width: 100px;
+    height: 100px;
+    margin-top: -33px;
+    margin-left: -33px;
+}
+
 @media screen and (min-width: 20em) {
     main {
-        background-color: lavender;
         height: 100vh;
     }
 
@@ -121,10 +131,6 @@ footer {
 }
 
 @media screen and (min-width: 48em) {
-    main {
-        background-color: blue;
-    }
-
     .main {
         display: grid;
         width: 100%;
@@ -142,7 +148,6 @@ footer {
 
     .button {
         grid-area: button;
-        background-color: lightpink;
     }
 
     #button-new {
