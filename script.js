@@ -1,4 +1,4 @@
-// declare globale variables needed to manipulate DOM
+// declare globale variables
 const buttonTheme = document.querySelector(".theme")
 const buttonNewGame = document.querySelector("#button-new")
 const buttonResetScores = document.querySelector("#button-reset")
@@ -10,17 +10,21 @@ const playerTwoStatus = document.querySelector(".player-two .status")
 const playerTwoScore = document.querySelector(".player-two .score")
 const tieStatus = document.querySelector(".tie .status")
 const tieScore = document.querySelector(".tie .score")
+const clickPlayerOne = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_004_38519.mp3") // Sound from Zapsplat.com
+const clickPlayerTwo = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_002_38517.mp3") // Sound from Zapsplat.com
+const eraseSound = new Audio("zapsplat_foley_paper_sheets_dump_into_small_plastic_trash_can_002_28581.mp3") // Sound from Zapsplat.com
+const lightSound = new Audio("household_caravan_bathroom_sink_light_switch_press_on_or_off.mp3") // Sound from Zapsplat.com
 
 // brand new game starting conditions
-let playerOneTurn = true // starts off with player one 
-playerOneStatus.innerText = "Your Turn" // starts with player one's turn
+let playerOneTurn = true // starts off with player one's turn
+playerOneStatus.innerText = "Your Turn" 
 
 let winYet = false // no winner at start of the game
 playerOneScore.innerText = 0 // start scores at zero
 playerTwoScore.innerText = 0
 tieScore.innerText = 0
 
-//let players choose their symbols
+// lets players choose their symbols
 let playerOneSymbol = "" 
 let playerTwoSymbol = ""
 
@@ -32,9 +36,10 @@ buttonTheme.addEventListener("click", function() {
     } else {
         buttonTheme.innerText = "Dark Mode"
     }
+    lightSound.play()
 })
 
-// when New Game button clicked, clear the board's contents
+// when New Game button clicked, clear the board's contents and reset game conditions
 buttonNewGame.addEventListener("click", function() {
     allTiles.forEach(function(tile) {
         tile.innerHTML = ""
@@ -45,6 +50,7 @@ buttonNewGame.addEventListener("click", function() {
     playerTwoStatus.innerText = ""
     tieStatus.innerText = ""
     gameOn()
+    eraseSound.play()
 })
 
 // when Reset Scores button clicked, resets all scores to 0
@@ -52,6 +58,7 @@ buttonResetScores.addEventListener("click", function() {
     allScores.forEach(function(score) {
         score.innerText = 0
     })
+    eraseSound.play()
 })
 
 alert("Welcome to Tic-Tac-Toe")
@@ -99,44 +106,49 @@ function chooseSymbol() {
 // 3. check for win and stop clickability if winner
 function gameOn() {    
     allTiles.forEach(function(tile) {
-        tile.addEventListener("mouseover", hoverEffect)
-        tile.addEventListener("mouseout", hoverEffectRemove)
+        // tile.addEventListener("mouseover", hoverEffect)
+        // tile.addEventListener("mouseout", hoverEffectRemove)
         tile.addEventListener("click", clickTile)
 
-        function hoverEffect() {
-            if (winYet === true) {
-                return
-            }
-            if (playerOneTurn && tile.innerHTML === "") {
-                tile.innerHTML = playerOneSymbol
-            } 
-            if(!playerOneTurn && tile.innerHTML === "") {
-                tile.innerHTML = playerTwoSymbol
-            }
-        }    
+        // function hoverEffect() {
+        //     if (winYet === true) {
+        //         return
+        //     }
+        //     if (playerOneTurn && tile.innerHTML === "") {
+        //         tile.innerHTML = playerOneSymbol
+        //     } 
+        //     if(!playerOneTurn && tile.innerHTML === "") {
+        //         tile.innerHTML = playerTwoSymbol
+        //     }
+        // }    
         
-        function hoverEffectRemove() {
-            if (winYet === true) {
-                return
-            }
-            tile.innerHTML = ""
-        }
+        // function hoverEffectRemove() {
+        //     if (winYet === true) {
+        //         return
+        //     }
+        //     tile.innerHTML = ""
+        // }
         
         function clickTile() {
             if (winYet === true && tile.innerHTML === "") {
                 return
             }
-            tile.removeEventListener("mouseover", hoverEffect)
-            tile.removeEventListener("mouseout", hoverEffectRemove)
-            tile.removeEventListener("click", clickTile)
+            // tile.removeEventListener("mouseover", hoverEffect)
+            // tile.removeEventListener("mouseout", hoverEffectRemove)
             if (playerOneTurn) {
                 tile.innerHTML = playerOneSymbol // player one symbol for tile's innerText
                 playerOneStatus.innerText = "" // indicates player one's turn
                 playerTwoStatus.innerText = "Your Turn"
+                tile.removeEventListener("click", clickTile)
+                clickPlayerOne.play()
+                console.log(tile.innerHTML)
             } else {
                 tile.innerHTML = playerTwoSymbol // player two symbole for tile's innerText
                 playerOneStatus.innerText = "Your Turn"
                 playerTwoStatus.innerText = "" // indicates player two's turn
+                tile.removeEventListener("click", clickTile)
+                console.log(tile.innerHTML)
+                clickPlayerTwo.play()
             }
             checkWin() // check for winner after each click
             checkTie() // check for tie after each click
