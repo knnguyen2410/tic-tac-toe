@@ -1,4 +1,4 @@
-// declare globale variables
+// define global variables for DOM manipulation
 const buttonTheme = document.querySelector(".theme")
 const buttonNewGame = document.querySelector("#button-new")
 const buttonResetScores = document.querySelector("#button-reset")
@@ -12,34 +12,36 @@ const tieStatus = document.querySelector(".tie .status")
 const tieScore = document.querySelector(".tie .score")
 
 // audio
+const soundTheme = new Audio("household_caravan_bathroom_sink_light_switch_press_on_or_off.mp3") // Sound from Zapsplat.com
+const soundNewGame = new Audio("zapsplat_multimedia_game_tone_digital_clean_level_up_win_finish_beep_91125.mp3") // Sound from Zapsplat.com
+const soundResetScores = new Audio("zapsplat_foley_paper_sheets_dump_into_small_plastic_trash_can_002_28581.mp3") // Sound from Zapsplat.com
 const soundPlayerOne = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_004_38519.mp3") // Sound from Zapsplat.com
 const soundPlayerTwo = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_002_38517.mp3") // Sound from Zapsplat.com
-const soundResetScores = new Audio("zapsplat_foley_paper_sheets_dump_into_small_plastic_trash_can_002_28581.mp3") // Sound from Zapsplat.com
-const soundNewGame = new Audio("zapsplat_multimedia_game_tone_digital_clean_level_up_win_finish_beep_91125.mp3") // Sound from Zapsplat.com
-const soundTheme = new Audio("household_caravan_bathroom_sink_light_switch_press_on_or_off.mp3") // Sound from Zapsplat.com
 const soundWinYet = new Audio("little_robot_sound_factory_Jingle_Win_Synth_00.mp3") // Sound from Zapsplat.com
 
-// brand new game starting conditions
-let playerOneTurn = true // starts off with player one's turn
-playerOneStatus.innerText = "Your Turn" 
+// placeholder for letting players choose their symbols
+let playerOneSymbol = "" 
+let playerTwoSymbol = ""
 
+// new game starting conditions
+let playerOneTurn = true // starts off with player one's turn
 let winYet = false // no winner at start of the game
+playerOneStatus.innerText = "Your Turn" 
 playerOneScore.innerText = 0 // start scores at zero
 playerTwoScore.innerText = 0
 tieScore.innerText = 0
 
-// lets players choose their symbols
-let playerOneSymbol = "" 
-let playerTwoSymbol = ""
-
-alert("Welcome to Tic-Tac-Toe")
-chooseSymbol()
-gameOn()
-
+// button event listeners
 buttonTheme.addEventListener("click", toggleTheme) // switch between light and dark mode
 buttonNewGame.addEventListener("click", newGame) // when New Game button clicked, clear the board's contents and reset game conditions
 buttonResetScores.addEventListener("click", resetScores) // when Reset Scores button clicked, resets all scores to 0
 
+// starts the game when the page first loads
+alert("Welcome to Tic-Tac-Toe")
+chooseSymbol()
+gameOn()
+
+//button event listener functions
 function toggleTheme() {
     document.body.classList.toggle("dark-mode")
     if (document.body.classList.contains("dark-mode")) {
@@ -105,10 +107,7 @@ function chooseSymbol() {
     }
 }
 
-// when an empty tile is clicked, switch between the following:
-// 1. turning innerText to X and O
-// 2. saying whose turn it is
-// 3. check for win and stop clickability if winner
+// the game functions by manipulating the tiles
 function gameOn() {    
     allTiles.forEach(function(tile) {
         tile.addEventListener("mouseover", hoverEffect)
@@ -117,6 +116,7 @@ function gameOn() {
     })
 }
 
+// tile event listener functions
 function hoverEffect() {
     if (winYet === true) {
         return
@@ -161,7 +161,7 @@ function clickTile() {
     playerOneTurn = !playerOneTurn // switches between player one's and player two's turns
 }
 
-
+// checks for winner
 function checkWin() {
     const winningDivs = [ // these will become the index values of each winning combination in the allTiles array
         [0, 1, 2], // row top
@@ -200,6 +200,7 @@ function checkWin() {
     }
 }
 
+//checks if there's a tie
 function checkTie() {
     if (winYet === false) { // if no winner yet (this covers the situation if there is a winning move in the 9th move of the game)
         let moveTracker = []
