@@ -1,17 +1,8 @@
-header {
-    text-align: center;
-    margin-top: 10px;
-}
-
 body {
     margin: 0;
-    color: black;
-    background-color: white;
-}
-
-.dark-mode {
-    color: white;
-    background-color: black;
+    color: #99838e;
+    background-color: #E5EBEA;
+    font-family: "Gaegu", Arial, Helvetica, sans-serif;
 }
 
 .container {
@@ -23,43 +14,44 @@ body {
       "main"
       "foot";
     grid-template-columns: 1fr;
-  }
-  
+}
+
 header {
     grid-area: head;
+    text-align: right;
+    margin-top: 1em;
+    margin-right: 1em;
+}
+
+button {
+    font-family: "Gaegu", Arial, Helvetica, sans-serif;
+    background-color: #DBD9DB;
+    border: none;
+    border-radius: 1em;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.dark-mode {
+    color: white;
+    background-color: black;
+}
+
+.dark-mode button {
+    color: white;
+    background-color: #747572;
 }
   
 main {
     grid-area: main;
 }
 
-footer {
-    grid-area: foot;
-    text-align: center;
-}
-
-#title {
+h1 {
     grid-area: title;
 }
 
 .game {
     grid-area: game;
-}
-
-.player-one {
-    grid-area: player1;
-}
-
-.tie {
-    grid-area: tie;
-}
-
-.player-two {
-    grid-area: player2;
-}
-
-.status, .name, .score {
-    margin: 10px;
 }
 
 .game-board {
@@ -94,6 +86,27 @@ footer {
     margin-left: -33px;
 }
 
+.player-one {
+    grid-area: player1;
+}
+
+.tie {
+    grid-area: tie;
+}
+
+.player-two {
+    grid-area: player2;
+}
+
+.status, .name, .score {
+    margin: 10px;
+}
+
+footer {
+    grid-area: foot;
+    text-align: center;
+}
+
 @media screen and (min-width: 20em) {
     main {
         height: 100vh;
@@ -126,7 +139,7 @@ footer {
     #button-reset {
         grid-area: buttonReset;
         display: block;
-        margin: auto;
+        margin-top: 1em;
     }
 
     .player-one, .tie, .player-two {

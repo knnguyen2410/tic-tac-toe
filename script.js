@@ -10,6 +10,8 @@ const playerTwoStatus = document.querySelector(".player-two .status")
 const playerTwoScore = document.querySelector(".player-two .score")
 const tieStatus = document.querySelector(".tie .status")
 const tieScore = document.querySelector(".tie .score")
+
+// audio
 const soundPlayerOne = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_004_38519.mp3") // Sound from Zapsplat.com
 const soundPlayerTwo = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_002_38517.mp3") // Sound from Zapsplat.com
 const soundResetScores = new Audio("zapsplat_foley_paper_sheets_dump_into_small_plastic_trash_can_002_28581.mp3") // Sound from Zapsplat.com
