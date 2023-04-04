@@ -10,10 +10,12 @@ const playerTwoStatus = document.querySelector(".player-two .status")
 const playerTwoScore = document.querySelector(".player-two .score")
 const tieStatus = document.querySelector(".tie .status")
 const tieScore = document.querySelector(".tie .score")
-const clickPlayerOne = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_004_38519.mp3") // Sound from Zapsplat.com
-const clickPlayerTwo = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_002_38517.mp3") // Sound from Zapsplat.com
-const eraseSound = new Audio("zapsplat_foley_paper_sheets_dump_into_small_plastic_trash_can_002_28581.mp3") // Sound from Zapsplat.com
-const lightSound = new Audio("household_caravan_bathroom_sink_light_switch_press_on_or_off.mp3") // Sound from Zapsplat.com
+const soundPlayerOne = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_004_38519.mp3") // Sound from Zapsplat.com
+const soundPlayerTwo = new Audio("zapsplat_multimedia_game_sound_single_short_generic_click_pop_002_38517.mp3") // Sound from Zapsplat.com
+const soundResetScores = new Audio("zapsplat_foley_paper_sheets_dump_into_small_plastic_trash_can_002_28581.mp3") // Sound from Zapsplat.com
+const soundNewGame = new Audio("zapsplat_multimedia_game_tone_digital_clean_level_up_win_finish_beep_91125.mp3") // Sound from Zapsplat.com
+const soundTheme = new Audio("household_caravan_bathroom_sink_light_switch_press_on_or_off.mp3") // Sound from Zapsplat.com
+const soundWinYet = new Audio("little_robot_sound_factory_Jingle_Win_Synth_00.mp3") // Sound from Zapsplat.com
 
 // brand new game starting conditions
 let playerOneTurn = true // starts off with player one's turn
@@ -28,19 +30,25 @@ tieScore.innerText = 0
 let playerOneSymbol = "" 
 let playerTwoSymbol = ""
 
-// switch between light and dark mode
-buttonTheme.addEventListener("click", function() {
+alert("Welcome to Tic-Tac-Toe")
+chooseSymbol()
+gameOn()
+
+buttonTheme.addEventListener("click", toggleTheme) // switch between light and dark mode
+buttonNewGame.addEventListener("click", newGame) // when New Game button clicked, clear the board's contents and reset game conditions
+buttonResetScores.addEventListener("click", resetScores) // when Reset Scores button clicked, resets all scores to 0
+
+function toggleTheme() {
     document.body.classList.toggle("dark-mode")
     if (document.body.classList.contains("dark-mode")) {
         buttonTheme.innerText = "Light Mode"
     } else {
         buttonTheme.innerText = "Dark Mode"
     }
-    lightSound.play()
-})
+    soundTheme.play()
+}
 
-// when New Game button clicked, clear the board's contents and reset game conditions
-buttonNewGame.addEventListener("click", function() {
+function newGame() {
     allTiles.forEach(function(tile) {
         tile.innerHTML = ""
     })
@@ -50,19 +58,15 @@ buttonNewGame.addEventListener("click", function() {
     playerTwoStatus.innerText = ""
     tieStatus.innerText = ""
     gameOn()
-    eraseSound.play()
-})
+    soundNewGame.play()
+}
 
-// when Reset Scores button clicked, resets all scores to 0
-buttonResetScores.addEventListener("click", function() {
+function resetScores() {
     allScores.forEach(function(score) {
         score.innerText = 0
     })
-    eraseSound.play()
-})
-
-alert("Welcome to Tic-Tac-Toe")
-chooseSymbol()
+    soundResetScores.play()
+}
 
 // allows player to customize their symbol (defaults to X & O)
 function chooseSymbol() {
@@ -97,7 +101,6 @@ function chooseSymbol() {
             playerTwoSymbol = `<img class = "token" src="${playerTwoSymbol}">`
         }
     }
-    gameOn()
 }
 
 // when an empty tile is clicked, switch between the following:
@@ -106,56 +109,56 @@ function chooseSymbol() {
 // 3. check for win and stop clickability if winner
 function gameOn() {    
     allTiles.forEach(function(tile) {
-        // tile.addEventListener("mouseover", hoverEffect)
-        // tile.addEventListener("mouseout", hoverEffectRemove)
+        tile.addEventListener("mouseover", hoverEffect)
+        tile.addEventListener("mouseout", hoverEffectRemove)
         tile.addEventListener("click", clickTile)
-
-        // function hoverEffect() {
-        //     if (winYet === true) {
-        //         return
-        //     }
-        //     if (playerOneTurn && tile.innerHTML === "") {
-        //         tile.innerHTML = playerOneSymbol
-        //     } 
-        //     if(!playerOneTurn && tile.innerHTML === "") {
-        //         tile.innerHTML = playerTwoSymbol
-        //     }
-        // }    
-        
-        // function hoverEffectRemove() {
-        //     if (winYet === true) {
-        //         return
-        //     }
-        //     tile.innerHTML = ""
-        // }
-        
-        function clickTile() {
-            if (winYet === true && tile.innerHTML === "") {
-                return
-            }
-            // tile.removeEventListener("mouseover", hoverEffect)
-            // tile.removeEventListener("mouseout", hoverEffectRemove)
-            if (playerOneTurn) {
-                tile.innerHTML = playerOneSymbol // player one symbol for tile's innerText
-                playerOneStatus.innerText = "" // indicates player one's turn
-                playerTwoStatus.innerText = "Your Turn"
-                tile.removeEventListener("click", clickTile)
-                clickPlayerOne.play()
-                console.log(tile.innerHTML)
-            } else {
-                tile.innerHTML = playerTwoSymbol // player two symbole for tile's innerText
-                playerOneStatus.innerText = "Your Turn"
-                playerTwoStatus.innerText = "" // indicates player two's turn
-                tile.removeEventListener("click", clickTile)
-                console.log(tile.innerHTML)
-                clickPlayerTwo.play()
-            }
-            checkWin() // check for winner after each click
-            checkTie() // check for tie after each click
-            playerOneTurn = !playerOneTurn // switches between player one's and player two's turns
-        }
     })
 }
+
+function hoverEffect() {
+    if (winYet === true) {
+        return
+    }
+    if (playerOneTurn && this.innerHTML === "") {
+        this.innerHTML = playerOneSymbol
+    } else {
+        this.innerHTML = playerTwoSymbol
+    }
+}    
+
+function hoverEffectRemove() {
+    if (winYet === true) {
+        return
+    }
+    this.innerHTML = ""
+}
+
+function clickTile() {
+    if (winYet === true && this.innerHTML === "") {
+        return
+    }
+    this.removeEventListener("mouseover", hoverEffect)
+    this.removeEventListener("mouseout", hoverEffectRemove)
+    if (playerOneTurn) {
+        this.innerHTML = playerOneSymbol // player one symbol for tile's innerText
+        playerOneStatus.innerText = "" // indicates player one's turn
+        playerTwoStatus.innerText = "Your Turn"
+        this.removeEventListener("click", clickTile)
+        soundPlayerOne.play()
+        console.log(this.innerHTML)
+    } else {
+        this.innerHTML = playerTwoSymbol // player two symbole for tile's innerText
+        playerOneStatus.innerText = "Your Turn"
+        playerTwoStatus.innerText = "" // indicates player two's turn
+        this.removeEventListener("click", clickTile)
+        console.log(this.innerHTML)
+        soundPlayerTwo.play()
+    }
+    checkWin() // check for winner after each click
+    checkTie() // check for tie after each click
+    playerOneTurn = !playerOneTurn // switches between player one's and player two's turns
+}
+
 
 function checkWin() {
     const winningDivs = [ // these will become the index values of each winning combination in the allTiles array
@@ -179,7 +182,8 @@ function checkWin() {
             allTiles[a].innerHTML === allTiles[b].innerHTML && // if the values in 3 spots are the same
             allTiles[b].innerHTML === allTiles[c].innerHTML
         ) {
-            winYet = true // declares winner              
+            winYet = true // declares winner    
+            soundWinYet.play()          
 
             if (playerOneStatus.innerText === "") { // updates winner status
                 playerOneStatus.innerText = "Winner!"

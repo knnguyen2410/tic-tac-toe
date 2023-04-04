@@ -83,6 +83,10 @@ footer {
     height: 2em;
 }
 
+.tile-background {
+    background-color: black;
+}
+
 .token {
     width: 100px;
     height: 100px;
