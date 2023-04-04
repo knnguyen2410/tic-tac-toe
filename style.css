@@ -1,8 +1,10 @@
 body {
     margin: 0;
-    color: #99838e;
-    background-color: #E5EBEA;
+    color: black;
+    background-color: white;
     font-family: "Gaegu", Arial, Helvetica, sans-serif;
+    background-image: url("https://i.pinimg.com/originals/b4/58/1d/b4581df9e47ce538d21555c94f75da95.gif");
+    background-size: 100%;
 }
 
 .container {
@@ -25,7 +27,7 @@ header {
 
 button {
     font-family: "Gaegu", Arial, Helvetica, sans-serif;
-    background-color: #DBD9DB;
+    background-color: pink;
     border: none;
     border-radius: 1em;
     padding: 0.5em;
@@ -35,11 +37,12 @@ button {
 .dark-mode {
     color: white;
     background-color: black;
+    background-image: none;
 }
 
 .dark-mode button {
     color: white;
-    background-color: #747572;
+    background-color: gray;
 }
   
 main {
