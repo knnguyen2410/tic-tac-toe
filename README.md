@@ -86,7 +86,7 @@ This game does not require any installation to run. It is played through the bro
 
 <br> 
 
-Thank you to Dhrubo Chowdhury for their guidance during this game's development.
+Thank you to Dhrubo Chowdhury and Leonardo Rodriguez for their guidance during this game's development and deployment!
 
 ---
 ## Wireframe
