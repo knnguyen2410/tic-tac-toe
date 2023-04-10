@@ -4,7 +4,8 @@ body {
     background-color: lavender;
     font-family: "Gaegu", Arial, Helvetica, sans-serif;
     background-image: url("https://i.pinimg.com/originals/b4/58/1d/b4581df9e47ce538d21555c94f75da95.gif");
-    background-size: 1500px;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .container {
