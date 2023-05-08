@@ -27,7 +27,7 @@ This application was my first-ever project, and was created from scratch using J
 
 This game does not require any installation to run. It is played through the browser between two players using the same computer. 
 
-[Click here to start playing](https://knnguyen2410.github.io/tictactoe/)
+[Click here to start playing](https://knnguyen2410.github.io/tic-tac-toe/)
 
 ### Instructions
 
